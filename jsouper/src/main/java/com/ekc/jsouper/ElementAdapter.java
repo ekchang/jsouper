@@ -9,9 +9,7 @@ import org.jsoup.nodes.Element;
 public abstract class ElementAdapter<T> {
   public abstract T fromElement(Element element) throws IOException;
 
-  public String query() {
-    return null;
-  }
+  public abstract String query();
 
   public interface Factory {
     ElementAdapter<?> create(Type type, Set<? extends Annotation> annotations, Jsouper jsouper);

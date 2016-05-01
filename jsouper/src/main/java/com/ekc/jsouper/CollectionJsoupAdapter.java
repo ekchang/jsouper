@@ -39,6 +39,11 @@ abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends Elemen
     ElementAdapter<T> elementAdapter = jsouper.adapter(elementType);
     return new CollectionJsoupAdapter<Collection<T>, T>(elementAdapter) {
       @Override
+      public String query() {
+        return null;
+      }
+
+      @Override
       Collection<T> newCollection() {
         return new ArrayList<>();
       }
@@ -49,6 +54,11 @@ abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends Elemen
     Type elementType = Types.collectionElementType(type, Collection.class);
     ElementAdapter<T> elementAdapter = jsouper.adapter(elementType);
     return new CollectionJsoupAdapter<Set<T>, T>(elementAdapter) {
+      @Override
+      public String query() {
+        return null;
+      }
+
       @Override
       Set<T> newCollection() {
         return new LinkedHashSet<>();
@@ -73,6 +83,7 @@ abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends Elemen
     return result;
   }
 
+  // Evaluate if we really need a method to write to HTML
   //@Override public void toElement(JsonWriter writer, C value) throws IOException {
   //  writer.beginArray();
   //  for (T element : value) {

@@ -26,6 +26,7 @@ public class Jsouper {
     this.factories = Collections.unmodifiableList(factories);
   }
 
+  // Add in the Moshi caching logic eventually
   public <T> ElementAdapter<T> adapter(Type type) {
     for (int i = 0, size = factories.size(); i < size; i++) {
       ElementAdapter<T> result =

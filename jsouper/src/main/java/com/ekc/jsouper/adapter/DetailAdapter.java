@@ -13,9 +13,8 @@ public class DetailAdapter extends ElementAdapter<Detail> {
 
   @Override
   public Detail fromElement(Element element) throws IOException {
-    String detailsTargetUrl = element.select("a.card-click-target").first().attr("href");
     String title = element.select("a.title").first().attr("title");
     String description = element.select("div.description").first().text();
-    return new Detail(detailsTargetUrl, title, description);
+    return new Detail(title, description);
   }
 }

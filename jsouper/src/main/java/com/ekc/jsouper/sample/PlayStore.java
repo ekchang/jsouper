@@ -5,9 +5,11 @@ import com.ekc.jsouper.Jsouper;
 import com.ekc.jsouper.Types;
 import com.ekc.jsouper.adapter.CoverAdapter;
 import com.ekc.jsouper.adapter.DetailAdapter;
+import com.ekc.jsouper.adapter.RatingAdapter;
 import com.ekc.jsouper.models.Cover;
 import com.ekc.jsouper.models.Detail;
 import com.ekc.jsouper.models.Movie;
+import com.ekc.jsouper.models.Rating;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,6 +23,7 @@ public class PlayStore {
 
       Jsouper jsouper = new Jsouper.Builder().add(Cover.class, new CoverAdapter())
           .add(Detail.class, new DetailAdapter())
+          .add(Rating.class, new RatingAdapter())
           .build();
 
       // Get a list of movies

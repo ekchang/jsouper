@@ -11,6 +11,6 @@ public class Cover {
 
   @Override
   public String toString() {
-    return String.format("image: %s target: %s", imageUrl, targetUrl);
+    return String.format("cover image: %s target: %s", imageUrl, targetUrl);
   }
 }
