@@ -1,8 +1,8 @@
-package com.ekc.jsouper.models;
+package com.ekc.jsouper.sample.models;
 
 public class Rating {
   public final String starsDescription;
-  private final double ratingPercent;
+  public final double ratingPercent;
   public final String price;
 
   public Rating(String starsDescription, double ratingPercent, String price) {

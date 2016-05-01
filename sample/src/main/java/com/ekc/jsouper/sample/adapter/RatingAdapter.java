@@ -1,7 +1,7 @@
-package com.ekc.jsouper.adapter;
+package com.ekc.jsouper.sample.adapter;
 
 import com.ekc.jsouper.ElementAdapter;
-import com.ekc.jsouper.models.Rating;
+import com.ekc.jsouper.sample.models.Rating;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

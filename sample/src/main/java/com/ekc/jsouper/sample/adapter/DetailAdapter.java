@@ -1,7 +1,7 @@
-package com.ekc.jsouper.adapter;
+package com.ekc.jsouper.sample.adapter;
 
 import com.ekc.jsouper.ElementAdapter;
-import com.ekc.jsouper.models.Detail;
+import com.ekc.jsouper.sample.models.Detail;
 import java.io.IOException;
 import org.jsoup.nodes.Element;
 

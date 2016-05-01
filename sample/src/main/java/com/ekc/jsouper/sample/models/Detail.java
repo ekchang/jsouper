@@ -1,16 +1,12 @@
-package com.ekc.jsouper.models;
+package com.ekc.jsouper.sample.models;
 
 public class Detail {
-  private final String title;
+  public final String title;
   public final String description;
-  //public final Stars stars;
 
-  public Detail(String title, String description
-      //Stars stars
-  ) {
+  public Detail(String title, String description) {
     this.title = title;
     this.description = description;
-    //this.stars = stars;
   }
 
   @Override

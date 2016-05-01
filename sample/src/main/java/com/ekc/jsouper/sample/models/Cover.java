@@ -1,4 +1,4 @@
-package com.ekc.jsouper.models;
+package com.ekc.jsouper.sample.models;
 
 public class Cover {
   public final String imageUrl;
