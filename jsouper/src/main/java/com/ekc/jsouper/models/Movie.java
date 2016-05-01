@@ -2,15 +2,15 @@ package com.ekc.jsouper.models;
 
 public class Movie {
   public final Cover cover;
-  //public final Details details;
+  public final Detail detail;
 
-  public Movie(Cover cover) {
+  public Movie(Cover cover, Detail detail) {
     this.cover = cover;
-    //this.details = details;
+    this.detail = detail;
   }
 
   @Override
   public String toString() {
-    return cover.toString();
+    return String.format("%s %s", cover, detail);
   }
 }

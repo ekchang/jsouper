@@ -13,6 +13,7 @@ public class Jsouper {
 
   static {
     BUILT_IN_FACTORIES.add(CollectionJsoupAdapter.FACTORY);
+    BUILT_IN_FACTORIES.add(ClassElementAdapter.FACTORY);
   }
 
   private List<ElementAdapter.Factory> factories = new ArrayList<>();
