@@ -15,7 +15,7 @@ public class DetailAdapter extends ElementAdapter<Detail> {
   public Detail fromElement(Element element) throws IOException {
     String detailsTargetUrl = element.select("a.card-click-target").first().attr("href");
     String title = element.select("a.title").first().attr("title");
-    String description = element.select("div.description").text();
+    String description = element.select("div.description").first().text();
     return new Detail(detailsTargetUrl, title, description);
   }
 }

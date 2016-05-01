@@ -57,6 +57,7 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
       if (Modifier.isAbstract(rawType.getModifiers())) {
         throw new IllegalArgumentException("Cannot serialize abstract class " + rawType.getName());
       }
+      final ElementQuery elementQueryAnnotation = rawType.getAnnotation(ElementQuery.class);
 
       ClassFactory<Object> classFactory = ClassFactory.get(rawType);
       Map<String, FieldBinding<?>> fields = new TreeMap<>();
@@ -64,7 +65,7 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
         createFieldBindings(jsouper, t, fields);
       }
       //return new ClassElementAdapter<>(classFactory, fields).nullSafe();
-      return new ClassElementAdapter<>(classFactory, fields);
+      return new ClassElementAdapter<>(classFactory, fields, elementQueryAnnotation.query());
     }
 
     /** Creates a field binding for each of declared field of {@code type}. */
@@ -115,10 +116,18 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
 
   private final ClassFactory<T> classFactory;
   private final Map<String, FieldBinding<?>> elementFields;
+  private final String query;
 
-  ClassElementAdapter(ClassFactory<T> classFactory, Map<String, FieldBinding<?>> elementFields) {
+  ClassElementAdapter(ClassFactory<T> classFactory, Map<String, FieldBinding<?>> elementFields,
+      String query) {
     this.classFactory = classFactory;
     this.elementFields = elementFields;
+    this.query = query;
+  }
+
+  @Override
+  public String query() {
+    return query;
   }
 
   @Override
@@ -136,6 +145,9 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
     } catch (IllegalAccessException e) {
       throw new AssertionError();
     }
+
+    // Find the first element matching the query
+    element = element.select(query()).first();
 
     final Iterator<Map.Entry<String, FieldBinding<?>>> iterator =
         elementFields.entrySet().iterator();

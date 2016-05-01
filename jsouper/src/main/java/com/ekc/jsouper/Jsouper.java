@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Jsouper {
 
-  private static final List<ElementAdapter.Factory> BUILT_IN_FACTORIES = new ArrayList<>(1);
+  private static final List<ElementAdapter.Factory> BUILT_IN_FACTORIES = new ArrayList<>(2);
 
   static {
     BUILT_IN_FACTORIES.add(CollectionJsoupAdapter.FACTORY);

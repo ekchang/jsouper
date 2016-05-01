@@ -1,5 +1,8 @@
 package com.ekc.jsouper.models;
 
+import com.ekc.jsouper.ElementQuery;
+
+@ElementQuery(query = "div.card.no-rationale.tall-cover.movies.small")
 public class Movie {
   public final Cover cover;
   public final Detail detail;
