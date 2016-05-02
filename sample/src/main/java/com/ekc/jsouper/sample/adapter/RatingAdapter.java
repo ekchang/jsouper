@@ -28,7 +28,7 @@ public class RatingAdapter extends ElementAdapter<Rating> {
       ratingPercent = Double.valueOf(matcher.group());
     }
 
-    String price = element.select("span.display-price").text();
+    String price = element.select("span.display-price").first().text();
 
     return new Rating(starsDescription, ratingPercent, price);
   }

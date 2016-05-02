@@ -14,7 +14,7 @@ public class CoverAdapter extends ElementAdapter<Cover> {
   @Override
   public Cover fromElement(Element element) throws IOException {
     final String imageUrl =
-        element.select("div.cover-inner-align").select("img").first().attr("src");
+        element.select("div.cover-inner-align").select("img").first().attr("data-cover-large");
     final String targetUrl = element.select("a.card-click-target").attr("href");
     return new Cover(imageUrl, targetUrl);
   }
