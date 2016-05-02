@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import org.jsoup.Jsoup;
 
-public class PlayStore {
+public class JavaExample {
   public static void main(String... args) {
     final Jsouper jsouper = new Jsouper.Builder().add(Cover.class, new CoverAdapter())
         .add(Detail.class, new DetailAdapter())
