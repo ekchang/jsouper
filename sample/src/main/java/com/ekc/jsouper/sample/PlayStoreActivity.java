@@ -15,7 +15,6 @@ import com.ekc.jsouper.sample.models.Cover;
 import com.ekc.jsouper.sample.models.Detail;
 import com.ekc.jsouper.sample.models.Movie;
 import com.ekc.jsouper.sample.models.Rating;
-import com.squareup.picasso.Picasso;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,8 +44,6 @@ public class PlayStoreActivity extends AppCompatActivity {
         .add(Detail.class, new DetailAdapter())
         .add(Rating.class, new RatingAdapter())
         .build();
-
-    Picasso.with(this).setLoggingEnabled(true);
 
     Retrofit retrofit = new Retrofit.Builder().baseUrl(PlayStoreApi.BASE_URL)
         .addConverterFactory(JsoupConverterFactory.create(jsouper))
