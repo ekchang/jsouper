@@ -78,6 +78,16 @@ Jsouper currently has built-in support for
 
 Contributions to add support for Maps and Arrays (and anything else that is currently missing) are welcome.
 
+Collections do require specifying the parameterized type (this is handled automatically with the retrofit converter):
+
+```java
+Type listOfMoviesType = Types.newParameterizedType(List.class, Movie.class);
+ElementAdapter<List<Movie>> moviesAdapter = jsouper.adapter(listOfMoviesType);
+List<Movie> movies = moviesAdapter.fromElement(Jsoup.connect("https://play.google.com/store").get());
+movies.forEach(System.out::println);
+
+```
+
 #### Retrofit Converter
 
 Add the converter dependency below and configure your Retrofit. Be sure to add it before any of your JSON parsers - JsoupConverterFactory will fail gracefully and allow your other parsers to step in so you can mix JSON and HTML parsing:
