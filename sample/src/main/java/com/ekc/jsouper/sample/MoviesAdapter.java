@@ -45,7 +45,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
   public void loadData(List<Movie> movies) {
     items.clear();
     items.addAll(movies);
-    notifyDataSetChanged();
+    notifyItemRangeInserted(0, movies.size());
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {

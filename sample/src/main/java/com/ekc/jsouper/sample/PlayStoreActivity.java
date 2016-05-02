@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.widget.Toast;
 import com.ekc.jsouper.Jsouper;
 import com.ekc.jsouper.R;
 import com.ekc.jsouper.databinding.ActivityMainBinding;
@@ -26,6 +27,7 @@ public class PlayStoreActivity extends AppCompatActivity {
 
   private ActivityMainBinding binding;
   private MoviesAdapter adapter;
+  private PlayStoreApi playStoreApi;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,12 @@ public class PlayStoreActivity extends AppCompatActivity {
 
     setSupportActionBar(binding.toolbar);
 
+    adapter = new MoviesAdapter();
     binding.listMovies.setLayoutManager(new GridLayoutManager(this, 2));
     binding.listMovies.addItemDecoration(new GridSpacingDecoration(
         getResources().getDimensionPixelSize(R.dimen.movie_card_spacing)));
-    adapter = new MoviesAdapter();
     binding.listMovies.setAdapter(adapter);
+    binding.listMovies.setItemAnimator(new GridItemAnimator());
 
     final Jsouper jsouper = new Jsouper.Builder().add(Cover.class, new CoverAdapter())
         .add(Detail.class, new DetailAdapter())
@@ -49,18 +52,33 @@ public class PlayStoreActivity extends AppCompatActivity {
         .addConverterFactory(JsoupConverterFactory.create(jsouper))
         .build();
 
-    PlayStoreApi playStore = retrofit.create(PlayStoreApi.class);
+    playStoreApi = retrofit.create(PlayStoreApi.class);
+    loadMovies();
+  }
 
-    playStore.getMovies().enqueue(new Callback<List<Movie>>() {
+  public void loadMovies() {
+    showLoading();
+    playStoreApi.getMovies().enqueue(new Callback<List<Movie>>() {
       @Override
       public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+        hideLoading();
         adapter.loadData(response.body());
       }
 
       @Override
       public void onFailure(Call<List<Movie>> call, Throwable t) {
-
+        hideLoading();
+        Toast.makeText(PlayStoreActivity.this, "Error loading movies from Play Store",
+            Toast.LENGTH_SHORT).show();
       }
     });
+  }
+
+  public void showLoading() {
+    binding.loading.show();
+  }
+
+  public void hideLoading() {
+    binding.loading.hide();
   }
 }
