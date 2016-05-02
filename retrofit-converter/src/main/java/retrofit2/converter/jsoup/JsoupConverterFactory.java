@@ -19,7 +19,15 @@ public class JsoupConverterFactory extends Converter.Factory {
   @Override
   public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
       Retrofit retrofit) {
-    ElementAdapter<?> adapter = jsouper.adapter(type);
+    ElementAdapter<?> adapter;
+
+    // Fail and let other converters take over
+    try {
+      adapter = jsouper.adapter(type);
+    } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+      return null;
+    }
 
     return new JsoupResponseBodyConverter<>(adapter);
   }
