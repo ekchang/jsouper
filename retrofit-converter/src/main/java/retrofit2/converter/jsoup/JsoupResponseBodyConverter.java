@@ -1,6 +1,6 @@
 package retrofit2.converter.jsoup;
 
-import com.ekc.jsouper.ElementAdapter;
+import com.ekchang.jsouper.ElementAdapter;
 import java.io.IOException;
 import okhttp3.ResponseBody;
 import org.jsoup.nodes.Document;

@@ -9,7 +9,7 @@ android {
   }
 
   defaultConfig {
-    applicationId "com.ekc.jsouper.sample"
+    applicationId "com.ekchang.jsouper.sample"
     minSdkVersion 21
     targetSdkVersion 23
     versionCode 1
@@ -20,6 +20,10 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
+
+  lintOptions {
+    abortOnError false
   }
 }
 

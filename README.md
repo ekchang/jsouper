@@ -104,22 +104,22 @@ Retrofit retrofit = new Retrofit.Builder()
 Download
 --------
 
-Download [the latest JAR][dl] or depend via Maven:
+Snapshot builds are currently available. Get [the latest JAR][dl] or depend via Maven:
 ```xml
 <dependency>
-  <groupId>com.ekc.jsouper</groupId>
+  <groupId>com.ekchang.jsouper</groupId>
   <artifactId>jsouper</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'com.ekc.jsouper:jsouper:0.0.1'
+compile 'com.ekchang.jsouper:jsouper:0.0.1-SNAPSHOT'
 ```
 
 Retrofit2 converter is also available:
 ```groovy
-compile 'com.ekc.jsouper:retrofit-converter-jsoup:0.0.1'
+compile 'com.ekchang.jsouper:retrofit-converter-jsouper:0.0.1-SNAPSHOT'
 ```
 
 License
@@ -141,7 +141,7 @@ License
     limitations under the License.
 
 
- [dl]: https://search.maven.org/remote_content?g=com.ekc.jsouper&a=jsouper&v=LATEST
+ [dl]: https://search.maven.org/remote_content?g=com.ekchang.jsouper&a=jsouper&v=LATEST
  [moshi]: https://github.com/square/moshi/
  [jsoup]: https://jsoup.org/
  [jsoup-attributes-text]: https://jsoup.org/cookbook/extracting-data/attributes-text-html
