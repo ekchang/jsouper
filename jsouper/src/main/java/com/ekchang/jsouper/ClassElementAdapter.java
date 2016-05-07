@@ -32,18 +32,18 @@ import org.jsoup.nodes.Element;
  * of classes in {@code java.*}, {@code javax.*} and {@code android.*} are omitted from both
  * serialization and deserialization unless they are either public or protected.
  */
-final class ClassElementAdapter<T> extends com.ekchang.jsouper.ElementAdapter<T> {
+final class ClassElementAdapter<T> extends ElementAdapter<T> {
   public static final Factory FACTORY = new Factory() {
     @Override
-    public com.ekchang.jsouper.ElementAdapter<?> create(Type type, Set<? extends Annotation> annotations,
-        com.ekchang.jsouper.Jsouper jsouper) {
-      Class<?> rawType = com.ekchang.jsouper.Types.getRawType(type);
+    public ElementAdapter<?> create(Type type, Set<? extends Annotation> annotations,
+        Jsouper jsouper) {
+      Class<?> rawType = Types.getRawType(type);
       if (rawType.isInterface() || rawType.isEnum()) return null;
       if (isPlatformType(rawType)) {
         throw new IllegalArgumentException("Platform " + type + " annotated " + annotations
             + " requires explicit ElementAdapter to be registered");
       }
-      if (!annotations.isEmpty()) return null;
+      //if (!annotations.isEmpty()) return null;
 
       if (rawType.getEnclosingClass() != null && !Modifier.isStatic(rawType.getModifiers())) {
         if (rawType.getSimpleName().isEmpty()) {
@@ -57,31 +57,51 @@ final class ClassElementAdapter<T> extends com.ekchang.jsouper.ElementAdapter<T>
       if (Modifier.isAbstract(rawType.getModifiers())) {
         throw new IllegalArgumentException("Cannot serialize abstract class " + rawType.getName());
       }
-      final ElementQuery elementQueryAnnotation = rawType.getAnnotation(ElementQuery.class);
 
-      com.ekchang.jsouper.ClassFactory<Object> classFactory = com.ekchang.jsouper.ClassFactory.get(rawType);
+      // If a SoupAdapter was declared, try returning an instance of that class
+      if (!annotations.isEmpty()) {
+        for (Annotation annotation : annotations) {
+          if (annotation instanceof SoupAdapter) {
+            try {
+              return (ElementAdapter<?>) ClassFactory.get(((SoupAdapter) annotation).value())
+                  .newInstance();
+            } catch (InvocationTargetException e) {
+              // TODO clean up exceptions
+              e.printStackTrace();
+            } catch (IllegalAccessException e) {
+              e.printStackTrace();
+            } catch (InstantiationException e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+
+      final SoupQuery elementQueryAnnotation = rawType.getAnnotation(SoupQuery.class);
+
+      ClassFactory<Object> classFactory = ClassFactory.get(rawType);
       Map<String, FieldBinding<?>> fields = new TreeMap<>();
-      for (Type t = type; t != Object.class; t = com.ekchang.jsouper.Types.getGenericSuperclass(t)) {
+      for (Type t = type; t != Object.class; t = Types.getGenericSuperclass(t)) {
         createFieldBindings(jsouper, t, fields);
       }
       //return new ClassElementAdapter<>(classFactory, fields).nullSafe();
-      return new ClassElementAdapter<>(classFactory, fields, elementQueryAnnotation.query());
+      return new ClassElementAdapter<>(classFactory, fields, elementQueryAnnotation.value());
     }
 
     /** Creates a field binding for each of declared field of {@code type}. */
-    private void createFieldBindings(com.ekchang.jsouper.Jsouper jsouper, Type type,
+    private void createFieldBindings(Jsouper jsouper, Type type,
         Map<String, FieldBinding<?>> fieldBindings) {
-      Class<?> rawType = com.ekchang.jsouper.Types.getRawType(type);
+      Class<?> rawType = Types.getRawType(type);
       boolean platformType = isPlatformType(rawType);
       for (Field field : rawType.getDeclaredFields()) {
         if (!includeField(platformType, field.getModifiers())) continue;
 
         // Look up a type adapter for this type.
-        Type fieldType = com.ekchang.jsouper.Types.resolve(type, rawType, field.getGenericType());
-        //Set<? extends Annotation> annotations = Util.jsonAnnotations(field);
-        com.ekchang.jsouper.ElementAdapter<Object> adapter = jsouper.adapter(fieldType);
+        Type fieldType = Types.resolve(type, rawType, field.getGenericType());
+        Set<? extends Annotation> annotations = Util.soupAnnotations(field);
+        ElementAdapter<Object> adapter = jsouper.adapter(fieldType, annotations);
 
-        // Create the binding between field and JSON.
+        // Create the binding between field and Element.
         field.setAccessible(true);
         FieldBinding<Object> fieldBinding = new FieldBinding<>(field, adapter);
 
@@ -114,11 +134,11 @@ final class ClassElementAdapter<T> extends com.ekchang.jsouper.ElementAdapter<T>
     }
   };
 
-  private final com.ekchang.jsouper.ClassFactory<T> classFactory;
+  private final ClassFactory<T> classFactory;
   private final Map<String, FieldBinding<?>> elementFields;
   private final String query;
 
-  ClassElementAdapter(com.ekchang.jsouper.ClassFactory<T> classFactory, Map<String, FieldBinding<?>> elementFields,
+  ClassElementAdapter(ClassFactory<T> classFactory, Map<String, FieldBinding<?>> elementFields,
       String query) {
     this.classFactory = classFactory;
     this.elementFields = elementFields;
@@ -199,9 +219,9 @@ final class ClassElementAdapter<T> extends com.ekchang.jsouper.ElementAdapter<T>
 
   static class FieldBinding<T> {
     private final Field field;
-    private final com.ekchang.jsouper.ElementAdapter<T> adapter;
+    private final ElementAdapter<T> adapter;
 
-    public FieldBinding(Field field, com.ekchang.jsouper.ElementAdapter<T> adapter) {
+    public FieldBinding(Field field, ElementAdapter<T> adapter) {
       this.field = field;
       this.adapter = adapter;
     }

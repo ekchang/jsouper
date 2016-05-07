@@ -12,7 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /** Converts collection types to Elements containing their converted contents. */
-abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends ElementAdapter<C> {
+abstract class CollectionElementAdapter<C extends Collection<T>, T> extends ElementAdapter<C> {
   public static final ElementAdapter.Factory FACTORY = new ElementAdapter.Factory() {
     @Override
     public ElementAdapter<?> create(Type type, Set<? extends Annotation> annotations,
@@ -30,14 +30,14 @@ abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends Elemen
 
   private final ElementAdapter<T> elementAdapter;
 
-  private CollectionJsoupAdapter(ElementAdapter<T> elementAdapter) {
+  private CollectionElementAdapter(ElementAdapter<T> elementAdapter) {
     this.elementAdapter = elementAdapter;
   }
 
   static <T> ElementAdapter<Collection<T>> newArrayListAdapter(Type type, Jsouper jsouper) {
     Type elementType = Types.collectionElementType(type, Collection.class);
     ElementAdapter<T> elementAdapter = jsouper.adapter(elementType);
-    return new CollectionJsoupAdapter<Collection<T>, T>(elementAdapter) {
+    return new CollectionElementAdapter<Collection<T>, T>(elementAdapter) {
       @Override
       public String query() {
         return null;
@@ -53,7 +53,7 @@ abstract class CollectionJsoupAdapter<C extends Collection<T>, T> extends Elemen
   static <T> ElementAdapter<Set<T>> newLinkedHashSetAdapter(Type type, Jsouper jsouper) {
     Type elementType = Types.collectionElementType(type, Collection.class);
     ElementAdapter<T> elementAdapter = jsouper.adapter(elementType);
-    return new CollectionJsoupAdapter<Set<T>, T>(elementAdapter) {
+    return new CollectionElementAdapter<Set<T>, T>(elementAdapter) {
       @Override
       public String query() {
         return null;

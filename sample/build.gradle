@@ -37,12 +37,12 @@ dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
   testCompile 'junit:junit:4.12'
   compile 'com.android.support:appcompat-v7:23.3.0'
-  //  Local
-  //    compile project(path: ':jsouper')
-  //    compile project(path: ':retrofit-converter')
-  //  Testing snapshots
-  compile 'com.ekchang.jsouper:jsouper:0.0.1-SNAPSHOT'
-  compile 'com.ekchang.jsouper:retrofit-converter-jsouper:0.0.1-SNAPSHOT'
+  //    Local
+  compile project(path: ':jsouper')
+  compile project(path: ':retrofit-converter')
+  //    Testing snapshots
+  //  compile 'com.ekchang.jsouper:jsouper:0.0.1-SNAPSHOT'
+  //  compile 'com.ekchang.jsouper:retrofit-converter-jsouper:0.0.1-SNAPSHOT'
 
   compile 'com.android.support:design:23.3.0'
   compile 'com.android.support:recyclerview-v7:23.3.0'
