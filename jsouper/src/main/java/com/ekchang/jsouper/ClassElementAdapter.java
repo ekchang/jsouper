@@ -43,7 +43,6 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
         throw new IllegalArgumentException("Platform " + type + " annotated " + annotations
             + " requires explicit ElementAdapter to be registered");
       }
-      //if (!annotations.isEmpty()) return null;
 
       if (rawType.getEnclosingClass() != null && !Modifier.isStatic(rawType.getModifiers())) {
         if (rawType.getSimpleName().isEmpty()) {
