@@ -66,12 +66,15 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
               return (ElementAdapter<?>) ClassFactory.get(((SoupAdapter) annotation).value())
                   .newInstance();
             } catch (InvocationTargetException e) {
-              // TODO clean up exceptions
-              e.printStackTrace();
+              Throwable targetException = e.getTargetException();
+              if (targetException instanceof RuntimeException) {
+                throw (RuntimeException) targetException;
+              }
+              if (targetException instanceof Error) throw (Error) targetException;
             } catch (IllegalAccessException e) {
-              e.printStackTrace();
+              throw new AssertionError();
             } catch (InstantiationException e) {
-              e.printStackTrace();
+              throw new RuntimeException(e);
             }
           }
         }
