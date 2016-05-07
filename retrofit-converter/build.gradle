@@ -44,6 +44,10 @@ afterEvaluate { project ->
           authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
         }
 
+        pom.whenConfigured {
+          p -> p.dependencies.removeAll { it.scope == "compile" }
+        }
+
         pom.project {
           name POM_NAME
           packaging POM_PACKAGING

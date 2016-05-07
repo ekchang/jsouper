@@ -28,13 +28,26 @@ android {
 }
 
 dependencies {
+  repositories {
+    maven {
+      //      Snapshots
+      url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+  }
   compile fileTree(include: ['*.jar'], dir: 'libs')
   testCompile 'junit:junit:4.12'
   compile 'com.android.support:appcompat-v7:23.3.0'
-  compile project(path: ':jsouper')
-  compile project(path: ':retrofit-converter')
+  //  Local
+  //    compile project(path: ':jsouper')
+  //    compile project(path: ':retrofit-converter')
+  //  Testing snapshots
+  compile 'com.ekchang.jsouper:jsouper:0.0.1-SNAPSHOT'
+  compile 'com.ekchang.jsouper:retrofit-converter-jsouper:0.0.1-SNAPSHOT'
+
   compile 'com.android.support:design:23.3.0'
   compile 'com.android.support:recyclerview-v7:23.3.0'
   compile 'com.squareup.picasso:picasso:2.5.2'
   compile 'com.android.support:cardview-v7:23.3.0'
+  compile 'com.squareup.retrofit2:retrofit:2.0.2'
+  compile 'org.jsoup:jsoup:1.9.1'
 }

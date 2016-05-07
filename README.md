@@ -115,11 +115,13 @@ Snapshot builds are currently available. Get [the latest JAR][dl] or depend via 
 or Gradle:
 ```groovy
 compile 'com.ekchang.jsouper:jsouper:0.0.1-SNAPSHOT'
+compile 'org.jsoup:jsoup:1.9.1'
 ```
 
 Retrofit2 converter is also available:
 ```groovy
 compile 'com.ekchang.jsouper:retrofit-converter-jsouper:0.0.1-SNAPSHOT'
+compile 'com.squareup.retrofit2:retrofit:2.0.2'
 ```
 
 License
