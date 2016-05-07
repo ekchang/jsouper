@@ -5,17 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
-import com.ekchang.jsouper.Jsouper;
 import com.ekchang.jsouper.R;
 import com.ekchang.jsouper.databinding.ActivityMainBinding;
-import com.ekchang.jsouper.sample.adapter.CoverAdapter;
-import com.ekchang.jsouper.sample.adapter.DetailAdapter;
-import com.ekchang.jsouper.sample.adapter.RatingAdapter;
 import com.ekchang.jsouper.sample.api.PlayStoreApi;
-import com.ekchang.jsouper.sample.models.Cover;
-import com.ekchang.jsouper.sample.models.Detail;
 import com.ekchang.jsouper.sample.models.Movie;
-import com.ekchang.jsouper.sample.models.Rating;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,13 +36,8 @@ public class PlayStoreActivity extends AppCompatActivity {
     binding.listMovies.setAdapter(adapter);
     binding.listMovies.setItemAnimator(new GridItemAnimator());
 
-    final Jsouper jsouper = new Jsouper.Builder().add(Cover.class, new CoverAdapter())
-        .add(Detail.class, new DetailAdapter())
-        .add(Rating.class, new RatingAdapter())
-        .build();
-
     Retrofit retrofit = new Retrofit.Builder().baseUrl(PlayStoreApi.BASE_URL)
-        .addConverterFactory(JsoupConverterFactory.create(jsouper))
+        .addConverterFactory(JsoupConverterFactory.create())
         .build();
 
     playStoreApi = retrofit.create(PlayStoreApi.class);
