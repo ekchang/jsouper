@@ -1,5 +1,9 @@
 package com.ekchang.jsouper.sample.models;
 
+import com.ekchang.jsouper.SoupAdapter;
+import com.ekchang.jsouper.sample.adapter.CoverAdapter;
+
+@SoupAdapter(CoverAdapter.class)
 public class Cover {
   public final String imageUrl;
   public final String targetUrl;

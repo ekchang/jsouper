@@ -1,16 +1,12 @@
 package com.ekchang.jsouper.sample.models;
 
-import com.ekchang.jsouper.SoupAdapter;
 import com.ekchang.jsouper.SoupQuery;
-import com.ekchang.jsouper.sample.adapter.CoverAdapter;
-import com.ekchang.jsouper.sample.adapter.DetailAdapter;
-import com.ekchang.jsouper.sample.adapter.RatingAdapter;
 
 @SoupQuery("div.card.no-rationale.tall-cover.movies.small")
 public class Movie {
-  @SoupAdapter(CoverAdapter.class) public final Cover cover;
-  @SoupAdapter(DetailAdapter.class) public final Detail detail;
-  @SoupAdapter(RatingAdapter.class) public final Rating rating;
+  public final Cover cover;
+  public final Detail detail;
+  public final Rating rating;
 
   public Movie(Cover cover, Detail detail, Rating rating) {
     this.cover = cover;

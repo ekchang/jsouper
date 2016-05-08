@@ -44,6 +44,8 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
             + " requires explicit ElementAdapter to be registered");
       }
 
+      if (!annotations.isEmpty()) return null;
+
       if (rawType.getEnclosingClass() != null && !Modifier.isStatic(rawType.getModifiers())) {
         if (rawType.getSimpleName().isEmpty()) {
           throw new IllegalArgumentException(
@@ -57,26 +59,10 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
         throw new IllegalArgumentException("Cannot serialize abstract class " + rawType.getName());
       }
 
-      // If a SoupAdapter was declared, try returning an instance of that class
-      if (!annotations.isEmpty()) {
-        for (Annotation annotation : annotations) {
-          if (annotation instanceof SoupAdapter) {
-            try {
-              return (ElementAdapter<?>) ClassFactory.get(((SoupAdapter) annotation).value())
-                  .newInstance();
-            } catch (InvocationTargetException e) {
-              Throwable targetException = e.getTargetException();
-              if (targetException instanceof RuntimeException) {
-                throw (RuntimeException) targetException;
-              }
-              if (targetException instanceof Error) throw (Error) targetException;
-            } catch (IllegalAccessException e) {
-              throw new AssertionError();
-            } catch (InstantiationException e) {
-              throw new RuntimeException(e);
-            }
-          }
-        }
+      // Handle SoupAdapter annotation as type annotation
+      final SoupAdapter soupAdapterAnnotation = rawType.getAnnotation(SoupAdapter.class);
+      if (soupAdapterAnnotation != null) {
+        return getSoupAdapterFromAnnotation(soupAdapterAnnotation);
       }
 
       final SoupQuery elementQueryAnnotation = rawType.getAnnotation(SoupQuery.class);
@@ -135,6 +121,24 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
       return Modifier.isPublic(modifiers) || Modifier.isProtected(modifiers) || !platformType;
     }
   };
+
+  private static ElementAdapter<?> getSoupAdapterFromAnnotation(SoupAdapter annotation) {
+    try {
+      return (ElementAdapter<?>) ClassFactory.get(annotation.value()).newInstance();
+    } catch (InvocationTargetException e) {
+      Throwable targetException = e.getTargetException();
+      if (targetException instanceof RuntimeException) {
+        throw (RuntimeException) targetException;
+      }
+      if (targetException instanceof Error) throw (Error) targetException;
+    } catch (IllegalAccessException e) {
+      throw new AssertionError();
+    } catch (InstantiationException e) {
+      throw new RuntimeException(e);
+    }
+
+    return null;
+  }
 
   private final ClassFactory<T> classFactory;
   private final Map<String, FieldBinding<?>> elementFields;

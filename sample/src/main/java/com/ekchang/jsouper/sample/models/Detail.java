@@ -1,5 +1,9 @@
 package com.ekchang.jsouper.sample.models;
 
+import com.ekchang.jsouper.SoupAdapter;
+import com.ekchang.jsouper.sample.adapter.DetailAdapter;
+
+@SoupAdapter(DetailAdapter.class)
 public class Detail {
   public final String title;
   public final String description;
