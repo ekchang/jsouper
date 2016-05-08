@@ -2,6 +2,7 @@ package com.ekchang.jsouper.sample;
 
 import com.ekchang.jsouper.ElementAdapter;
 import com.ekchang.jsouper.Jsouper;
+import com.ekchang.jsouper.Types;
 import com.ekchang.jsouper.sample.models.Movie;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -12,7 +13,7 @@ public class JavaExample {
   public static void main(String... args) {
     final Jsouper jsouper = new Jsouper.Builder().build();
 
-    Type listOfMoviesType = com.ekchang.jsouper.Types.newParameterizedType(List.class, Movie.class);
+    Type listOfMoviesType = Types.newParameterizedType(List.class, Movie.class);
     ElementAdapter<List<Movie>> moviesAdapter = jsouper.adapter(listOfMoviesType);
 
     try {

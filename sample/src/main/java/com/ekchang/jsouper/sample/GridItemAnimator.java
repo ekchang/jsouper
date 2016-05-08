@@ -6,7 +6,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 public class GridItemAnimator extends RecyclerView.ItemAnimator {
@@ -30,7 +29,8 @@ public class GridItemAnimator extends RecyclerView.ItemAnimator {
         .setInterpolator(new DecelerateInterpolator())
         .setListener(new ViewPropertyAnimatorListener() {
           @Override
-          public void onAnimationStart(View view) { }
+          public void onAnimationStart(View view) {
+          }
 
           @Override
           public void onAnimationEnd(View view) {
