@@ -7,7 +7,7 @@ No API, no problem. Jsouper helps you parse HTML into Java objects. It borrows f
 Document document = Jsoup.connect("https://play.google.com/store").get();
 
 Jsouper jsouper = new Jsouper.Builder().build();
-ElementAdapter<Movie> elementAdapter = jsouper.adapter(MovieAdapter.class);
+ElementAdapter<Movie> elementAdapter = jsouper.adapter(Movie.class);
 
 Movie movie = elementAdapter.fromElement(document);
 System.out.println(movie);
