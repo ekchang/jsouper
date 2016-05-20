@@ -1,1 +1,1 @@
-include ':sample', ':jsouper', ':retrofit-converter'
+include ':sample-android', ':jsouper', ':retrofit-converter', ':sample-java'

@@ -1,4 +1,4 @@
-package com.ekchang.jsouper;
+package com.ekchang.jsouper.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

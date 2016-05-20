@@ -1,4 +1,4 @@
-package com.ekchang.jsouper;
+package com.ekchang.jsouper.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -6,8 +6,10 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target(TYPE)
+/** Annotates a class, specifying the discrete Adapter class to use */
 @Retention(RUNTIME)
-public @interface SoupQuery {
-  String value();
+@Target(TYPE)
+@SoupQualifier
+public @interface SoupAdapter {
+  Class value();
 }

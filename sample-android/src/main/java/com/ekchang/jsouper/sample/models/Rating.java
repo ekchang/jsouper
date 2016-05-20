@@ -1,6 +1,6 @@
 package com.ekchang.jsouper.sample.models;
 
-import com.ekchang.jsouper.SoupAdapter;
+import com.ekchang.jsouper.annotations.SoupAdapter;
 import com.ekchang.jsouper.sample.adapter.RatingAdapter;
 
 @SoupAdapter(RatingAdapter.class)

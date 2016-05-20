@@ -1,8 +1,8 @@
 package com.ekchang.jsouper;
 
+import com.ekchang.jsouper.annotations.SoupQualifier;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedHashSet;

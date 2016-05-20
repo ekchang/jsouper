@@ -1,6 +1,10 @@
 package com.ekchang.jsouper;
 
+import com.ekchang.jsouper.annotations.SoupAdapter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Set;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +17,7 @@ public class JsouperTest {
       + "<a class=\"title\" title=\"Deadpool\"/>"
       + "<div class=\"description\">Sample description</div>"
       + "<a class=\"rating\">4</a>"
+      + "<div class=\"review\">Ryan Reynolds is adorable!</div>"
       + "</div>";
 
   final Document document = Jsoup.parse(MOVIE_HTML);
@@ -35,6 +40,18 @@ public class JsouperTest {
     ElementAdapter<Movie> elementAdapter = jsouper.adapter(AnnotatedMovie.class);
     Movie movie = elementAdapter.fromElement(document);
     assertThat(movie).isEqualTo(new Movie("Deadpool", "Sample description", 4));
+  }
+
+  @Test
+  public void composingAdapterFactory() throws Exception {
+    Jsouper jsouper = new Jsouper.Builder().add(new MovieReviewAdapterFactory())
+        .add(Movie.class, new MovieAdapter())
+        .build();
+
+    ElementAdapter<MovieReview> movieReviewAdapter = jsouper.adapter(MovieReview.class);
+    MovieReview movieReview = movieReviewAdapter.fromElement(document);
+    assertThat(movieReview.movie).isEqualTo(new Movie("Deadpool", "Sample description", 4));
+    assertThat(movieReview.review).isEqualTo("Ryan Reynolds is adorable!");
   }
 
   static class Movie {
@@ -88,6 +105,60 @@ public class JsouperTest {
     @Override
     public String query() {
       return "div.movie";
+    }
+  }
+
+  static class MovieReview {
+    Movie movie;
+    String review;
+
+    public MovieReview(Movie movie, String review) {
+      this.movie = movie;
+      this.review = review;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      MovieReview that = (MovieReview) o;
+
+      if (movie != null ? !movie.equals(that.movie) : that.movie != null) return false;
+      return review != null ? review.equals(that.review) : that.review == null;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = movie != null ? movie.hashCode() : 0;
+      result = 31 * result + (review != null ? review.hashCode() : 0);
+      return result;
+    }
+  }
+
+  static class MovieReviewAdapterFactory implements ElementAdapter.Factory {
+
+    public static final String REVIEW_QUERY = "div.movie > div.review";
+
+    @Override
+    public ElementAdapter<?> create(Type type, Set<? extends Annotation> annotations,
+        Jsouper jsouper) {
+      if (!type.equals(MovieReview.class)) return null;
+      final ElementAdapter<Movie> movieAdapter = jsouper.adapter(Movie.class);
+      final ElementAdapter<String> reviewAdapter = jsouper.adapter(String.class);
+      return new ElementAdapter<MovieReview>() {
+        @Override
+        public MovieReview fromElement(Element element) throws IOException {
+          Movie movie = movieAdapter.fromElement(element);
+          String review = reviewAdapter.fromElement(element, REVIEW_QUERY);
+          return new MovieReview(movie, review);
+        }
+
+        @Override
+        public String query() {
+          return "div.movie";
+        }
+      };
     }
   }
 }

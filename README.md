@@ -161,6 +161,6 @@ License
  [dl]: https://search.maven.org/remote_content?g=com.ekchang.jsouper&a=jsouper&v=LATEST
  [moshi]: https://github.com/square/moshi/
  [jsoup]: https://jsoup.org/
- [jsoup-attributes-text]: https://jsoup.org/cookbook/extracting-data/attributes-text-html
+ [jsoup-attributes-text]: https://jsoup.org/cookbook/extracting-data/selector-syntax
  [sample]: https://github.com/ekchang/jsouper/tree/master/sample
  [snapshots]: https://oss.sonatype.org/content/repositories/snapshots/com/ekchang/jsouper/

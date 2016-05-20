@@ -9,9 +9,10 @@ import java.util.Set;
 
 public class Jsouper {
 
-  private static final List<ElementAdapter.Factory> BUILT_IN_FACTORIES = new ArrayList<>(2);
+  private static final List<ElementAdapter.Factory> BUILT_IN_FACTORIES = new ArrayList<>(3);
 
   static {
+    BUILT_IN_FACTORIES.add(StandardElementAdapters.FACTORY);
     BUILT_IN_FACTORIES.add(CollectionElementAdapter.FACTORY);
     BUILT_IN_FACTORIES.add(ClassElementAdapter.FACTORY);
   }
@@ -30,7 +31,7 @@ public class Jsouper {
     return adapter(type, Util.NO_ANNOTATIONS);
   }
 
-  // Add in the Moshi caching logic eventually
+  // TODO Add in the Moshi caching logic eventually
   public <T> ElementAdapter<T> adapter(Type type, Set<? extends Annotation> annotations) {
     for (int i = 0, size = factories.size(); i < size; i++) {
       ElementAdapter<T> result =

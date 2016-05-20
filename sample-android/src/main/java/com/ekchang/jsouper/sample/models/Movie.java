@@ -1,6 +1,6 @@
 package com.ekchang.jsouper.sample.models;
 
-import com.ekchang.jsouper.SoupQuery;
+import com.ekchang.jsouper.annotations.SoupQuery;
 
 @SoupQuery("div.card.no-rationale.tall-cover.movies.small")
 public class Movie {

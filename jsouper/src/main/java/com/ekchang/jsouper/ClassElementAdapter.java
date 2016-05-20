@@ -15,6 +15,8 @@
  */
 package com.ekchang.jsouper;
 
+import com.ekchang.jsouper.annotations.SoupAdapter;
+import com.ekchang.jsouper.annotations.SoupQuery;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -144,7 +146,8 @@ final class ClassElementAdapter<T> extends ElementAdapter<T> {
   private final Map<String, FieldBinding<?>> elementFields;
   private final String query;
 
-  ClassElementAdapter(ClassFactory<T> classFactory, Map<String, FieldBinding<?>> elementFields,
+  ClassElementAdapter(ClassFactory<T> classFactory,
+      Map<String, FieldBinding<?>> elementFields,
       String query) {
     this.classFactory = classFactory;
     this.elementFields = elementFields;
