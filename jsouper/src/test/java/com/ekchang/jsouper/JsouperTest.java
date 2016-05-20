@@ -54,6 +54,16 @@ public class JsouperTest {
     assertThat(movieReview.review).isEqualTo("Ryan Reynolds is adorable!");
   }
 
+  @Test
+  public void stringAdapter() throws Exception {
+    Jsouper jsouper = new Jsouper.Builder().build();
+    ElementAdapter<String> stringAdapter = jsouper.adapter(String.class);
+    String text = "Lorem ipsum dolor sit amet.";
+    Document document = Jsoup.parse(String.format("<div class=\"lorem\">%s</div>", text));
+    assertThat(stringAdapter.fromElement(document)).isEqualTo(text);
+    assertThat(stringAdapter.fromElement(document, ".lorem")).isEqualTo(text);
+  }
+
   static class Movie {
     String title;
     String detail;

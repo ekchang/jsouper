@@ -12,6 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * Annotates a class, specifying the query to use in the generated {@link ElementAdapter#query()}.
  * This lets you specify the query without creating an explicit {@link ElementAdapter}
  */
+// TODO Allow annotating a field to run as a query for generated ClassElementAdapters
 @Target(TYPE)
 @Retention(RUNTIME)
 @Documented
