@@ -12,7 +12,7 @@
       android:supportsRtl="true"
       android:theme="@style/PlayStoreTheme.NoActionBar"
       >
-    <activity android:name="com.ekchang.jsouper.sample.PlayStoreActivity">
+    <activity android:name=".sample.PlayStoreActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
